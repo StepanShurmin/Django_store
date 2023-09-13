@@ -1,10 +1,12 @@
 from django.db import models
 
 NULLABLE = {'blank': True, 'null': True}
+
+
 class Product(models.Model):
     product_name = models.CharField(max_length=50, verbose_name='наименование')
     product_description = models.CharField(max_length=200, verbose_name='описание продукта')
-    product_image = models.ImageField(upload_to='products/', verbose_name='изображение')
+    product_image = models.ImageField(upload_to='products/', verbose_name='изображение', **NULLABLE)
     product_category = models.CharField(max_length=50, verbose_name='категория')
     product_price = models.FloatField(verbose_name='цена')
     product_date_creation = models.DateField(verbose_name='дата создания')
