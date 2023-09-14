@@ -1,0 +1,94 @@
+[
+  {
+    "model": "catalog.product",
+    "pk": 4,
+    "fields": {
+      "product_name": "макбук",
+      "product_description": "отличный ноут",
+      "product_image": "",
+      "product_category": "Ноутбуки",
+      "product_price": 100000.0,
+      "product_date_creation": "2023-07-03",
+      "product_date_modification": "2023-09-13",
+      "is_active": true
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 5,
+    "fields": {
+      "product_name": "LG",
+      "product_description": "хороший моник",
+      "product_image": "",
+      "product_category": "Мониторы",
+      "product_price": 50000.0,
+      "product_date_creation": "2023-09-13",
+      "product_date_modification": "2023-09-13",
+      "is_active": true
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 6,
+    "fields": {
+      "product_name": "асус",
+      "product_description": "норм телефон",
+      "product_image": "",
+      "product_category": "Смартфоны",
+      "product_price": 50000.0,
+      "product_date_creation": "2023-09-13",
+      "product_date_modification": "2023-09-13",
+      "is_active": true
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 7,
+    "fields": {
+      "product_name": "асус",
+      "product_description": "мощный, игровой",
+      "product_image": "",
+      "product_category": "Компьютеры",
+      "product_price": 150000.0,
+      "product_date_creation": "2023-09-04",
+      "product_date_modification": "2023-09-10",
+      "is_active": false
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 1,
+    "fields": {
+      "category_name": "Мониторы",
+      "category_description": "мониторы для ПК.",
+      "is_active": true
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 2,
+    "fields": {
+      "category_name": "Ноутбуки",
+      "category_description": "макбуки.",
+      "is_active": true
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 3,
+    "fields": {
+      "category_name": "Смартфоны",
+      "category_description": "компактные.",
+      "is_active": true
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 4,
+    "fields": {
+      "category_name": "Компьютеры",
+      "category_description": "игровые.",
+      "is_active": false
+    }
+  }
+]
