@@ -1,3 +1,34 @@
-{% extends 'catalog/base.html' %}
+{% extends 'catalog/product.html' %}
+{% load my_tags %}
+<!doctype html>
+<html lang="en">
+
 {% block content %}
+
+    <div class="container">
+        <div class="row text-center">
+            {% for product in products %}
+
+                <div class="col-3">
+                    <div class="card mb-4 box-shadow">
+                        <div class="card-header">
+                            <img class="card-img-top"
+                                 src="{{ product.image|my_media }}"
+                                 alt="Card image">
+                            <h4 class="my-0 font-weight-normal">{{ product.name|title }}
+
+                            </h4>
+                        </div>
+                        <div class="card-body">
+                            <h1 class="fs-4 card-title pricing-card-title">{{ product.price }} руб</h1>
+                            <ul class="list-unstyled mt-3 mb-4 text-start m-3">
+                                <li>{{ product.description }}</li>
+                            </ul>
+                            <a class="p-2 btn btn-outline-primary"
+                               href="{% url 'catalog:product' product.id %}">Перейти</a>
+                        </div>
+                    </div>
+                </div>
+
+            {% endfor %}
 {% endblock %}

@@ -8,7 +8,8 @@ app_name = CatalogConfig
 
 def home_page(request):
     context = {
-        'products': Product.objects.all()
+        'products': Product.objects.all(),
+        'title': 'Главная'
     }
     return render(request, 'catalog/home.html', context=context)
 
