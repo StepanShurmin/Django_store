@@ -20,7 +20,8 @@ def contacts(request):
         phone = request.POST.get('phone')
         message = request.POST.get('message')
         print(f"имя: {name} телефон: ({phone}) сообщение: {message}")
-    return render(request, 'catalog/contacts.html')
+    context = {'title': 'Контакты'}
+    return render(request, 'catalog/contacts.html', context)
 
 
 def category(request):

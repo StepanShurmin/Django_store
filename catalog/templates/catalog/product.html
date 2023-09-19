@@ -11,13 +11,13 @@
                     </div>
                     <div class="card-body">
                         <img class="card-img-top"
-                         src="{{ object.image | my_media }}"
-                         alt="Card image">
+                             src="{{ object.image|my_media }}"
+                             alt="Card image">
                         <h1 class="card-title pricing-card-title">{{ object.price }} руб</h1>
                         <ul class="list-unstyled mt-3 mb-4 text-start m-3">
                             <li>{{ object.description|slice:'100' }}</li>
                         </ul>
-                        <button type="button" class="btn btn-lg btn-block btn-outline-primary">Купить</button>
+                        <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:product' object.id %}">Купить</a>
                     </div>
                 </div>
             </div>
