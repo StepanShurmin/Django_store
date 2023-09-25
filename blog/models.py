@@ -4,6 +4,7 @@ NULLABLE = {'blank': True, 'null': True}
 
 
 class Blog(models.Model):
+    """Модель блоговой записи."""
     title = models.CharField(max_length=100, verbose_name='Заголовок')
     slug = models.CharField(max_length=100, **NULLABLE, verbose_name='slug')
     body = models.TextField(**NULLABLE, verbose_name='Содержимое')
@@ -13,8 +14,10 @@ class Blog(models.Model):
     count_views = models.IntegerField(default=0, verbose_name='Количество просмотров')
 
     def __str__(self):
+        """Строковое представление блоговой модели."""
         return f"{self.title} {self.slug} {self.body} {self.count_views}"
 
     class Meta:
+        """Метаданные о модели."""
         verbose_name = 'Блог'
         verbose_name_plural = 'Блоги'

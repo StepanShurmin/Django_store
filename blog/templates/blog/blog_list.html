@@ -22,6 +22,11 @@
                             <a class="p-2 btn btn-outline-primary" href="{% url 'blog:update' object.pk %}">edit</a>
                             <a class="p-2 btn btn-outline-danger" href="{% url 'blog:delete' object.pk %}">delete</a>
                         </div>
+                        <style>
+                            .btn-group a {
+                                margin-right: 5px;
+                            }
+                        </style>
                     </div>
                 </div>
             </div>
