@@ -10,8 +10,8 @@ class Product(models.Model):
     image = models.ImageField(upload_to='products/', verbose_name='изображение', **NULLABLE)
     category = models.CharField(max_length=50, verbose_name='категория')
     price = models.FloatField(verbose_name='цена')
-    date_creation = models.DateField(verbose_name='дата создания', **NULLABLE)
-    date_modification = models.DateField(verbose_name='дата последнего изменения', **NULLABLE)
+    date_creation = models.DateField(auto_now_add=True, verbose_name='дата создания', **NULLABLE)
+    date_modification = models.DateField(auto_now_add=True, verbose_name='дата последнего изменения', **NULLABLE)
 
     is_active = models.BooleanField(default=True, verbose_name='в наличии')
 
@@ -42,3 +42,20 @@ class Category(models.Model):
         verbose_name = 'категория'
         verbose_name_plural = 'категории'
         ordering = ('name',)
+
+
+class Version(models.Model):
+    """Модель Версий."""
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Продукт')
+    version_number = models.IntegerField(verbose_name='Номер версии')
+    version_name = models.CharField(max_length=100, verbose_name='Название версии')
+    is_active = models.BooleanField(verbose_name='Признак текущей версии', default=False)
+
+    def __str__(self):
+        """Строковое представление модели версии."""
+        return f'{self.version_name} | {self.version_number}'
+
+    class Meta:
+        """Метаданные о модели."""
+        verbose_name = 'версия'
+        verbose_name_plural = 'версии'
