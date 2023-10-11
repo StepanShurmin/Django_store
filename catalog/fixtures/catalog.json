@@ -1,28 +1,28 @@
 [
   {
     "model": "catalog.product",
-    "pk": 2,
+    "pk": 1,
     "fields": {
-      "name": "макбук",
-      "description": "отличный ноут",
-      "image": "",
-      "category": "Ноутбуки",
-      "price": 100000.0,
-      "date_creation": "2023-07-03",
+      "name": "LG",
+      "description": "LG",
+      "image": "products/img_LG.png",
+      "category": "Мониторы",
+      "price": 50000.0,
+      "date_creation": "2023-09-13",
       "date_modification": "2023-09-13",
       "is_active": true
     }
   },
   {
     "model": "catalog.product",
-    "pk": 1,
+    "pk": 2,
     "fields": {
-      "name": "LG",
-      "description": "хороший моник",
-      "image": "",
-      "category": "Мониторы",
-      "price": 50000.0,
-      "date_creation": "2023-09-13",
+      "name": "макбук",
+      "description": "отличный ноут",
+      "image": "products/img_MAC.png",
+      "category": "Ноутбуки",
+      "price": 100000.0,
+      "date_creation": "2023-07-03",
       "date_modification": "2023-09-13",
       "is_active": true
     }
@@ -33,7 +33,7 @@
     "fields": {
       "name": "асус",
       "description": "норм телефон",
-      "image": "",
+      "image": "products/img_ZEN.png",
       "category": "Смартфоны",
       "price": 50000.0,
       "date_creation": "2023-09-13",
@@ -47,7 +47,7 @@
     "fields": {
       "name": "асус",
       "description": "мощный, игровой",
-      "image": "",
+      "image": "products/img_ASUS.png",
       "category": "Компьютеры",
       "price": 150000.0,
       "date_creation": "2023-09-04",
@@ -89,6 +89,26 @@
       "name": "Компьютеры",
       "description": "игровые.",
       "is_active": false
+    }
+  },
+  {
+    "model": "catalog.version",
+    "pk": 3,
+    "fields": {
+      "product": 1,
+      "version_number": 1,
+      "version_name": "ver_1",
+      "is_active": true
+    }
+  },
+  {
+    "model": "catalog.version",
+    "pk": 5,
+    "fields": {
+      "product": 4,
+      "version_number": 3,
+      "version_name": "ver_3",
+      "is_active": true
     }
   }
 ]
