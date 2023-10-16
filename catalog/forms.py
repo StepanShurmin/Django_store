@@ -23,10 +23,11 @@ class StyleFormMixin:
 
 class ProductForm(StyleFormMixin, forms.ModelForm):
     """Форма для модели Product."""
+
     class Meta:
         """Метаданные о модели."""
         model = Product
-        fields = '__all__'
+        exclude = ('users',)
 
     def clean_name(self):
         """
@@ -43,6 +44,7 @@ class ProductForm(StyleFormMixin, forms.ModelForm):
 
 class VersionForm(StyleFormMixin, forms.ModelForm):
     """Форма для модели Version."""
+
     class Meta:
         """Метаданные о модели."""
         model = Version

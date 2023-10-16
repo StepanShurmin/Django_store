@@ -26,6 +26,10 @@
                         <td class="w-25">Пользователь:</td>
                         {{ object.users|default:'Не установлен' }}
                     </div>
+                    <div class="card-footer">
+                        <td class="w-25">Дата добавления:</td>
+                        {{ object.date_creation|default:'-' }}
+                    </div>
                 </div>
             </div>
         </div>
