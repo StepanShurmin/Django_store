@@ -1,4 +1,4 @@
-# from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.forms import inlineformset_factory
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, TemplateView, CreateView, UpdateView, DeleteView, DetailView
@@ -6,6 +6,7 @@ from django.views.generic import ListView, TemplateView, CreateView, UpdateView,
 from catalog.apps import CatalogConfig
 from catalog.forms import ProductForm, VersionForm
 from catalog.models import Category, Product, Version
+from catalog.services import get_categories_cache
 
 app_name = CatalogConfig
 
@@ -44,7 +45,20 @@ class CategoryListView(ListView):
     """Выводит на экран страницу с категориями товаров."""
     model = Category
     template_name = 'catalog/category.html'
-    extra_context = {'title': 'Категории'}
+    extra_context = {
+        'object_list': get_categories_cache(),
+        'title': 'Категории'
+    }
+
+
+class CategoryDetailView(LoginRequiredMixin, DetailView):
+    model = Category
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        pk = context['object'].pk
+        context['products'] = Product.objects.filter(category=pk)
+        return context
 
 
 class ProductListView(ListView):
@@ -73,10 +87,11 @@ class ProductListView(ListView):
         return context_data
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     """Создает новый продукт."""
     model = Product
     form_class = ProductForm
+    permission_required = 'catalog.add_product'
     success_url = reverse_lazy('catalog:home')
 
     def form_valid(self, form):
@@ -87,10 +102,11 @@ class ProductCreateView(CreateView):
         return super().form_valid(form)
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     """Обновляет продукт."""
     model = Product
     form_class = ProductForm
+    permission_required = 'catalog.update_product'
     success_url = reverse_lazy('catalog:product_view')
 
     def get_success_url(self):
@@ -126,7 +142,8 @@ class ProductDetailView(DetailView):
     model = Product
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     """Удаляет продукт."""
     model = Product
+    permission_required = 'catalog.delete_product'
     success_url = reverse_lazy('catalog:home')

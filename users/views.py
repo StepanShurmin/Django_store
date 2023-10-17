@@ -1,6 +1,8 @@
 import random
 
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
 from django.shortcuts import redirect, get_object_or_404, render
 from django.urls import reverse_lazy, reverse
@@ -42,7 +44,7 @@ def verify_email(request, token):
     return render(request, 'users/verification_success.html')
 
 
-class UserUpdateView(UpdateView):
+class UserUpdateView(LoginRequiredMixin, UpdateView):
     """Обновляет информацию о пользователе."""
     model = User
     success_url = reverse_lazy('users:profile')
@@ -54,6 +56,7 @@ class UserUpdateView(UpdateView):
         return self.request.user
 
 
+@login_required
 def generate_new_password(request):
     """Генерирует новый пароль для пользователя, отправляет его по электронной почте и обновляет."""
     new_password = ''.join([str(random.randint(0, 9)) for _ in range(12)])

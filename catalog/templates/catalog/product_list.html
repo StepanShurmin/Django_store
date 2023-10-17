@@ -2,53 +2,55 @@
 {% load my_tags %}
 {% block content %}
 
-
-        <div class="row text-center">
-        {% if request.user.is_authenticated %}
+    <div class="row text-center">
         <div class="col-12">
-            <div class="col-12">
+            {% if perms.catalog.add_product %}
                 <a class='btn btn-primary mb-5' href="{% url 'catalog:product_create' %}">Добавить продукт</a>
-            </div>
+            {% endif %}
         </div>
-    {% endif %}
-{% for object in object_list %}
-    <div class="col-3">
-        <div class="card mb-4 box-shadow">
-            <div class="card-header">
-                <h4 class="my-0 font-weight-normal">{{ object.name|title }}</h4>
-            </div>
-            <div class="card-body">
-                <img class="card-img-top"
-                     src="{{ object.image|my_media }}"
-                     alt="Card image">
-                <h3 class="card-title pricing-card-title">{{ object.price }} руб</h3>
-                <ul class="list-unstyled mt-3 mb-4 text-start m-3">
-                    <li>{{ object.description|slice:'100' }}</li>
-                </ul>
-                <div class="btn-group h5 mb-auto">
-                    <a class="p-2 btn btn-outline-success " href="{% url 'catalog:product_view' object.pk %}">view</a>
-                    {% if request.user.is_authenticated %}
-                        <a class="p-2 btn btn-outline-primary "
-                           href="{% url 'catalog:product_edit' object.pk %}">update</a>
-                        <a class="p-2 btn btn-outline-danger " href="{% url 'catalog:product_delete' object.pk %}">delete</a>
-                    {% endif %}
-                </div>
-                <style>.btn-group a {
-                    margin-right: 5px;
-                }</style>
-                {% for version in object.version_set.all %}
-                    {% if version.is_active %}
-                        <div class="card-footer">
-                            Номер активной версии: {{ version.version_number }}
+        {% for object in object_list %}
+            <div class="col-md-3">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal">{{ object.name|title }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <img class="card-img-top"
+                             src="{{ object.image|my_media }}"
+                             alt="Card image">
+                        <h3 class="card-title pricing-card-title">{{ object.price }} руб</h3>
+                        <ul class="list-unstyled mt-3 mb-4 text-start m-3">
+                            <li>{{ object.description|slice:'100' }}</li>
+                        </ul>
+                        {#                        {% if request.user.is_authenticated %}#}
+                        <div class="btn-group h5 mb-auto">
+                            <a class="p-2 btn btn-outline-success "
+                               href="{% url 'catalog:product_view' object.pk %}">view</a>
+                            {% if perms.catalog.update_product %}
+                                <a class="p-2 btn btn-outline-primary "
+                                   href="{% url 'catalog:product_edit' object.pk %}">update</a>
+                            {% endif %}
+                            {% if perms.catalog.delete_product %}
+                                <a class="p-2 btn btn-outline-danger "
+                                   href="{% url 'catalog:product_delete' object.pk %}">delete</a>
+                            {% endif %}
                         </div>
-                    {% endif %}
-                {% endfor %}
-
+                        {#                        {% endif %}#}
+                    </div>
+                    {% for version in object.version_set.all %}
+                        {% if version.is_active %}
+                            <div class="card-footer">
+                                Номер активной версии: {{ version.version_number }}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
             </div>
+            {% if forloop.counter|divisibleby:4 and not forloop.last %}
+                </div>
+                <div class="row text-center">
+            {% endif %}
+        {% endfor %}
         </div>
-    </div>
-{% endfor %}
-</div>
 
 {% endblock %}
-

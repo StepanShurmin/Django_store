@@ -4,7 +4,9 @@
     <div class="row text-center">
         <div class="col-12">
             <div class="col-12">
-                <a class='btn btn-primary' href="{% url 'blog:create' %}">Добавить материал</a>
+                {% if perms.blog.add_article %}
+                    <a class='btn btn-primary' href="{% url 'blog:create' %}">Добавить материал</a>
+                {% endif %}
             </div>
         </div>
         {% for object in object_list %}
@@ -19,8 +21,13 @@
                         </ul>
                         <div class="btn-group">
                             <a class="p-2 btn btn-outline-success " href="{% url 'blog:view' object.pk %}">view</a>
-                            <a class="p-2 btn btn-outline-primary" href="{% url 'blog:update' object.pk %}">edit</a>
-                            <a class="p-2 btn btn-outline-danger" href="{% url 'blog:delete' object.pk %}">delete</a>
+                            {% if perms.blog.change_article %}
+                                <a class="p-2 btn btn-outline-primary" href="{% url 'blog:update' object.pk %}">edit</a>
+                            {% endif %}
+                            {% if perms.blog.delete_article %}
+                                <a class="p-2 btn btn-outline-danger"
+                                   href="{% url 'blog:delete' object.pk %}">delete</a>
+                            {% endif %}
                         </div>
                         <style>
                             .btn-group a {
