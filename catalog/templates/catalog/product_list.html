@@ -22,20 +22,20 @@
                         <ul class="list-unstyled mt-3 mb-4 text-start m-3">
                             <li>{{ object.description|slice:'100' }}</li>
                         </ul>
-                        {#                        {% if request.user.is_authenticated %}#}
-                        <div class="btn-group h5 mb-auto">
+                        {% if request.user.is_authenticated %}
+                            <div class="btn-group h5 mb-auto">
                             <a class="p-2 btn btn-outline-success "
                                href="{% url 'catalog:product_view' object.pk %}">view</a>
-                            {% if perms.catalog.update_product %}
-                                <a class="p-2 btn btn-outline-primary "
-                                   href="{% url 'catalog:product_edit' object.pk %}">update</a>
-                            {% endif %}
-                            {% if perms.catalog.delete_product %}
-                                <a class="p-2 btn btn-outline-danger "
-                                   href="{% url 'catalog:product_delete' object.pk %}">delete</a>
-                            {% endif %}
+                        {% if perms.catalog.update_product %}
+                            <a class="p-2 btn btn-outline-primary "
+                               href="{% url 'catalog:product_edit' object.pk %}">update</a>
+                        {% endif %}
+                        {% if perms.catalog.delete_product %}
+                            <a class="p-2 btn btn-outline-danger "
+                               href="{% url 'catalog:product_delete' object.pk %}">delete</a>
+                        {% endif %}
                         </div>
-                        {#                        {% endif %}#}
+                     {% endif %}
                     </div>
                     {% for version in object.version_set.all %}
                         {% if version.is_active %}

@@ -11,14 +11,14 @@ from catalog.services import get_categories_cache
 app_name = CatalogConfig
 
 
-class HomeListView(ListView):
+class HomeListView(LoginRequiredMixin, ListView):
     """Выводит на экран главную страницу с товарами."""
     model = Product
     template_name = 'catalog/product_list.html'
     extra_context = {'title': 'Главная'}
 
 
-class ContactsView(TemplateView):
+class ContactsView(LoginRequiredMixin, TemplateView):
     """Выводит на экран страницу с контактными данными."""
     template_name = 'catalog/contacts.html'
 
@@ -41,7 +41,7 @@ class ContactsView(TemplateView):
         return context
 
 
-class CategoryListView(ListView):
+class CategoryListView(LoginRequiredMixin, ListView):
     """Выводит на экран страницу с категориями товаров."""
     model = Category
     template_name = 'catalog/category.html'
@@ -61,7 +61,7 @@ class CategoryDetailView(LoginRequiredMixin, DetailView):
         return context
 
 
-class ProductListView(ListView):
+class ProductListView(LoginRequiredMixin, ListView):
     """Выводит на экран страницу с товарами."""
     template_name = 'catalog/product_list.html'
     model = Product
@@ -87,7 +87,7 @@ class ProductListView(ListView):
         return context_data
 
 
-class ProductCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     """Создает новый продукт."""
     model = Product
     form_class = ProductForm
@@ -102,7 +102,7 @@ class ProductCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView)
         return super().form_valid(form)
 
 
-class ProductUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
     """Обновляет продукт."""
     model = Product
     form_class = ProductForm
@@ -137,7 +137,7 @@ class ProductUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView)
         return super().form_valid(form)
 
 
-class ProductDetailView(DetailView):
+class ProductDetailView(LoginRequiredMixin, DetailView):
     """Выводит информацию о продукте."""
     model = Product
 

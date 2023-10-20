@@ -50,7 +50,7 @@ class BlogUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
         return reverse('blog:view', args=[self.kwargs.get('pk')])
 
 
-class BlogListView(ListView):
+class BlogListView(LoginRequiredMixin, ListView):
     """Выводит на экран статьи."""
     model = Blog
     extra_context = {
