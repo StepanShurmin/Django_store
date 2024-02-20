@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.forms import inlineformset_factory
+from django.http import Http404
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, TemplateView, CreateView, UpdateView, DeleteView, DetailView
 
@@ -67,24 +68,36 @@ class ProductListView(LoginRequiredMixin, ListView):
     model = Product
 
     def get_queryset(self):
-        """
-        Фильтрует набор запросов и возвращает только
-        объект с соответствующим идентификатором.
-        """
-        queryset = super().get_queryset()
-        queryset = queryset.filter(id=self.kwargs.get('pk'))
-        return queryset
+        return super().get_queryset().filter(
+            category_id=self.kwargs.get('pk'),
+            users=self.request.user
+        )
 
     def get_context_data(self, *args, **kwargs):
-        """
-        Возвращает словарь с контекстными данными,
-        для отображения заголовка станицы.
-        """
         context_data = super().get_context_data(*args, **kwargs)
         category_item = Category.objects.get(pk=self.kwargs.get('pk'))
+        context_data['category_pk'] = category_item.pk
         context_data['title'] = f'Продукт категории {category_item.name}'
-
         return context_data
+    # def get_queryset(self):
+    #     """
+    #     Фильтрует набор запросов и возвращает только
+    #     объект с соответствующим идентификатором.
+    #     """
+    #     queryset = super().get_queryset()
+    #     queryset = queryset.filter(id=self.kwargs.get('pk'))
+    #     return queryset
+    #
+    # def get_context_data(self, *args, **kwargs):
+    #     """
+    #     Возвращает словарь с контекстными данными,
+    #     для отображения заголовка станицы.
+    #     """
+    #     context_data = super().get_context_data(*args, **kwargs)
+    #     category_item = Category.objects.get(pk=self.kwargs.get('pk'))
+    #     context_data['title'] = f'Продукт категории {category_item.name}'
+    #
+    #     return context_data
 
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
@@ -108,6 +121,12 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
     form_class = ProductForm
     permission_required = 'catalog.update_product'
     success_url = reverse_lazy('catalog:product_view')
+
+    def get_object(self, queryset=None):
+        self.object = super().get_object(queryset)
+        if self.object.users != self.request.user:
+            raise Http404
+        return self.object
 
     def get_success_url(self):
         """Возвращает URL для перенаправления после успешного сохранения формы."""
